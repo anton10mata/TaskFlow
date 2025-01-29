@@ -1,11 +1,15 @@
 import './App.css'
-import Calendar from '../src/components/Calendar'
+import Home from './pages/home'
+import LoginPage from './pages/login'
+import RegisterPage from './pages/register'
 
 function App() {
 
   return (
     <div>
-      <Calendar />
+      <LoginPage />
+      <RegisterPage />
+      <Home />
     </div>
   )
 }
