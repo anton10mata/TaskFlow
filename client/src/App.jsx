@@ -1,5 +1,5 @@
 import './App.css'
-import Calendar from './pages/example-calendar.jsx'
+import Calendar from '../src/components/Calendar'
 
 function App() {
 
