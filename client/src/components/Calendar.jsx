@@ -22,52 +22,63 @@ const Calendar = () => {
   };
 
   return (
-    <div>
-      {currentView === 'month' && (
-        <MonthView
-          onSelectDay={handleSelectDay}
-          events={events}
-        />
-      )}
-            {currentView === 'week' && (
-        <WeekView
-          weekDays={getWeekDays(selectedDate)}
-          events={events}
-          onSelectDay={handleSelectDay}
-        />
-      )}
-      {currentView === 'day' && (
-        <DayView
-          date={selectedDate}
-          events={events}
-          onAddEvent={() => setCurrentView('eventForm')}
-        />
-      )}
-      {currentView === 'eventForm' && (
-        <EventForm
-          date={selectedDate}
-          onSaveEvent={(date, event) => {
-            handleAddEvent(date, event);
-            setCurrentView('day');
-          }}
-        />
-      )}
+    <div className="min-h-screen bg-white text-gray-800">
+      <div className="max-w-6xl mx-auto p-6">
+        {/* Header */}
+        <header className="text-center py-4 mb-8">
+          <h1 className="text-3xl font-bold text-green-600">My Calendar</h1>
+        </header>
+
+        {/* Calendar Views */}
+        <div className="bg-white shadow-md rounded-lg p-6">
+          {currentView === 'month' && (
+            <MonthView
+              onSelectDay={handleSelectDay}
+              events={events}
+            />
+          )}
+          {currentView === 'week' && (
+            <WeekView
+              weekDays={getWeekDays(selectedDate)}
+              events={events}
+              onSelectDay={handleSelectDay}
+            />
+          )}
+          {currentView === 'day' && (
+            <DayView
+              date={selectedDate}
+              events={events}
+              onAddEvent={() => setCurrentView('eventForm')}
+            />
+          )}
+          {currentView === 'eventForm' && (
+            <EventForm
+              date={selectedDate}
+              onSaveEvent={(date, event) => {
+                handleAddEvent(date, event);
+                setCurrentView('day');
+              }}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };
 
 // Utility function to get the days in the current week
 const getWeekDays = (selectedDate) => {
-    const startOfWeek = new Date(selectedDate);
-    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Get Sunday of the week
-  
-    return Array.from({ length: 7 }, (_, i) => {
-      const day = new Date(startOfWeek);
-      day.setDate(startOfWeek.getDate() + i);
-      return {
-        label: day.toLocaleDateString('en-US', { weekday: 'short' }),
-        date: day.toDateString(),
-      };
-    });
-  };
+  const startOfWeek = new Date(selectedDate);
+  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Get Sunday of the week
+
+  return Array.from({ length: 7 }, (_, i) => {
+    const day = new Date(startOfWeek);
+    day.setDate(startOfWeek.getDate() + i);
+    return {
+      label: day.toLocaleDateString('en-US', { weekday: 'short' }),
+      date: day.toDateString(),
+    };
+  });
+};
+
 export default Calendar;
