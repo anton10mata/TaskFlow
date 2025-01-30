@@ -16,14 +16,14 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <LoginPage />
+        element: <Home />  // change this to <LoginPage /> once server side code is working. leave as home for development purposes
       },
       {
         element: <RegisterPage />
       },
-      {
-        element: <Home />
-      },
+      // {
+      //   element: <Home />
+      // },
     ]
   }
 ]);
