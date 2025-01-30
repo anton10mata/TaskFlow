@@ -26,7 +26,7 @@ const Calendar = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-800">
+    <div className=" bg-white text-gray-800">
       <div className="max-w-6xl mx-auto p-6">
         <header className="text-center py-4 mb-8">
           <h1 className="text-3xl font-bold text-green-600">My Calendar</h1>
