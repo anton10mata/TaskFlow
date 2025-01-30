@@ -4,10 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "cd server && node server.js && cd ../client && vite",
     "dev": "cd client && vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "install": "cd server && npm i && cd ../client && npm i"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
