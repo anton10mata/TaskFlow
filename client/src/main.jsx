@@ -6,6 +6,8 @@ import App from "./App.jsx";
 import LoginPage from "./pages/login.jsx";
 import RegisterPage from "./pages/register.jsx";
 import Home from "./pages/home.jsx";
+import Dashboard from "./pages/dashboard.jsx"; // Ensure this exists
+import ProtectedRoute from "./components/ProtectedRoute.jsx"; // Correct import
 
 // Initialize Apollo Client
 const client = new ApolloClient({
@@ -19,9 +21,9 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { path: "login", element: <LoginPage /> },
-      { path: "register", element: <RegisterPage /> },
-      { path: "home", element: <Home /> },
+      { path: "login", element: <LoginPage /> }, // ✅ Ensure this exists
+      { path: "register", element: <RegisterPage /> }, // ✅ Ensure this exists
+      { path: "dashboard", element: <ProtectedRoute />, children: [{ path: "", element: <Dashboard /> }] },
     ],
   },
 ]);
