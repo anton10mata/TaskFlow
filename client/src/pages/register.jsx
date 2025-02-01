@@ -1,12 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { gql, useMutation } from "@apollo/client";
+
+const REGISTER_MUTATION = gql`
+  mutation Register($email: String!, $password: String!) {
+    register(email: $email, password: $password) {
+      message
+    }
+  }
+`;
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  const [register] = useMutation(REGISTER_MUTATION);
 
   const handleRegister = async (event) => {
     event.preventDefault();
@@ -17,96 +29,97 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await register({ variables: { email, password } });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        navigate("/login"); // Redirect to login page after successful registration
+      if (response.data.register.message === "User registered successfully") {
+        navigate("/login");
       } else {
-        setErrorMessage(data.message || "Failed to register. Try again.");
+        setErrorMessage(response.data.register.message);
       }
     } catch (error) {
-      console.error("Error during registration:", error);
       setErrorMessage("Something went wrong. Please try again later.");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen w-screen bg-gray-100">
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
         <form onSubmit={handleRegister}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="register-email" className="block text-sm font-medium text-gray-700">
               Email Address
             </label>
             <input
               type="email"
-              id="email"
+              id="register-email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm"
               required
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <div className="mb-4 relative">
+            <label htmlFor="register-password" className="block text-sm font-medium text-gray-700">
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
+            <div className="relative flex items-center">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="register-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm pr-10"
+                required
+                autoComplete="new-password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-indigo-500 bg-transparent p-1"
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+          <div className="mb-4 relative">
+            <label htmlFor="register-confirm-password" className="block text-sm font-medium text-gray-700">
               Confirm Password
             </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
+            <div className="relative flex items-center">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                id="register-confirm-password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm pr-10"
+                required
+                autoComplete="new-password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-indigo-500 bg-transparent p-1"
+              >
+                {showConfirmPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
           </div>
 
-          {errorMessage && (
-            <div className="mb-4 text-sm text-red-500">{errorMessage}</div>
-          )}
-
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
+          <button type="submit" className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
             Register
           </button>
         </form>
-
+        
         <p className="mt-4 text-center text-sm text-gray-600">
-          Already have an account?{' '}
-          <a
-            href="/login"
-            className="text-indigo-600 hover:underline"
-          >
+          Already have an account?{" "}
+          <a href="/login" className="text-indigo-600 hover:underline">
             Login here
           </a>
         </p>
       </div>
     </div>
   );
-}
+};
