@@ -1,25 +1,34 @@
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
-const schema = require("./schema"); // Import GraphQL schema
+const schema = require("./schema"); 
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const app = express();
-app.use(cors()); // Enable CORS
-app.use(express.json()); // Parse JSON requests
+app.use(cors()); 
+app.use(express.json());
 
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`);
-  console.log(`Body:`, req.body);
-  next();
-});
-
-// GraphQL endpoint
+// GraphQL endpoint with context
 app.use(
   "/graphql",
-  graphqlHTTP({
-    schema,
-    graphiql: true, // Enables GraphQL UI at http://localhost:5000/graphql
+  graphqlHTTP((req) => {
+    let user = null;
+    const authHeader = req.headers.authorization;
+
+    if (authHeader) {
+      try {
+        user = jwt.verify(authHeader.replace("Bearer ", ""), process.env.JWT_SECRET);
+      } catch (error) {
+        console.error("Invalid token:", error);
+      }
+    }
+
+    return {
+      schema,
+      graphiql: true, 
+      context: { user }, // 🔹 Pass user to GraphQL context
+    };
   })
 );
 
