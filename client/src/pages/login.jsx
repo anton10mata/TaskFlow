@@ -1,98 +1,97 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { gql, useMutation } from "@apollo/client";
+
+const LOGIN_MUTATION = gql`
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      message
+    }
+  }
+`;
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const [login] = useMutation(LOGIN_MUTATION);
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
-    // Send login request to backend API
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await login({ variables: { email, password } });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // Store the JWT token in localStorage
-        localStorage.setItem("token", data.token);
-
-        // Navigate to the dashboard
+      if (response.data.login.token) {
+        localStorage.setItem("token", response.data.login.token);
         navigate("/dashboard");
       } else {
-        // Display an error message
-        setErrorMessage(data.message || "Invalid email or password.");
+        setErrorMessage(response.data.login.message);
       }
-    } catch (error) {
-      console.error("Error during login:", error);
-      setErrorMessage("Something went wrong. Please try again later.");
+    } catch (err) {
+      setErrorMessage("Invalid email or password.");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen w-screen bg-gray-100">
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="login-email" className="block text-sm font-medium text-gray-700">
               Email Address
             </label>
             <input
               type="email"
-              id="email"
+              id="login-email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm"
               required
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <div className="mb-4 relative">
+            <label htmlFor="login-password" className="block text-sm font-medium text-gray-700">
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
+            <div className="relative flex items-center">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="login-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm pr-10"
+                required
+                autoComplete="current-password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-indigo-500 bg-transparent p-1"
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
           </div>
 
-          {errorMessage && (
-            <div className="mb-4 text-sm text-red-500">{errorMessage}</div>
-          )}
+          {errorMessage && <div className="mb-4 text-sm text-red-500">{errorMessage}</div>}
 
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
+          <button type="submit" className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
             Login
           </button>
         </form>
 
         <p className="mt-4 text-center text-sm text-gray-600">
-          Don't have an account?{' '}
-          <a
-            href="/register"
-            className="text-indigo-600 hover:underline"
-          >
+          Don't have an account?{" "}
+          <a href="/register" className="text-indigo-600 hover:underline">
             Sign up here
           </a>
         </p>
       </div>
     </div>
   );
-}
+};

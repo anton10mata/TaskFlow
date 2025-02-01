@@ -1,19 +1,20 @@
-import './App.css'
-import Calendar from './components/Calendar'
-import Home from './pages/home'
-import LoginPage from './pages/login'
-import RegisterPage from './pages/register'
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
-function App() {
+export default function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Redirect to login page if at the root
+    if (location.pathname === "/") {
+      navigate("/login");
+    }
+  }, [location, navigate]);
 
   return (
-    <div>
-      <Home /> {/** change this to <LoginPage /> once server side code is working. leave as home for development purposes */}
-      <LoginPage />
-      <RegisterPage />
-
+    <div className="flex flex-col items-center justify-center min-h-screen w-full">
+      <Outlet />
     </div>
-  )
-}
-
-export default App
+  );
+};

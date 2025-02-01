@@ -26,49 +26,45 @@ const Calendar = () => {
   };
 
   return (
-    <div className=" bg-white text-gray-800">
-      <div className="max-w-6xl mx-auto p-6">
-        <header className="text-center py-4 mb-8">
-          <h1 className="text-3xl font-bold text-green-600">My Calendar</h1>
-        </header>
+    <div className="calendar-container bg-white text-gray-800 w-full min-h-screen flex flex-col items-center">
+      <header className="text-center py-4 mb-4">
+        <h1 className="text-3xl font-bold text-green-600">My Calendar</h1>
+      </header>
 
-        <div className="bg-white shadow-md rounded-lg p-6">
-          {currentView === 'month' && (
-            <MonthView
-              onSelectDay={handleSelectDay}
-              events={events}
-            />
-          )}
-          {currentView === 'week' && (
-            <WeekView
-              weekDays={getWeekDays(selectedDate)}
-              events={events}
-              onSelectDay={handleSelectDay}
-            />
-          )}
-          {currentView === 'day' && (
-            <DayView
-              date={selectedDate}
-              events={events}
-              onAddEvent={() => setCurrentView('eventForm')}
-              onGoBack={handleGoBack}
-            />
-          )}
-          {currentView === 'eventForm' && (
-            <EventForm
-              date={selectedDate}
-              onSaveEvent={(date, event) => {
-                handleAddEvent(date, event);
-                setCurrentView('day');
-              }}
-            />
-          )}
-        </div>
+      <div className="w-full max-w-6xl bg-white shadow-md rounded-lg p-6">
+        {currentView === 'month' && (
+          <MonthView onSelectDay={handleSelectDay} events={events} />
+        )}
+        {currentView === 'week' && (
+          <WeekView
+            weekDays={getWeekDays(selectedDate)}
+            events={events}
+            onSelectDay={handleSelectDay}
+          />
+        )}
+        {currentView === 'day' && (
+          <DayView
+            date={selectedDate}
+            events={events}
+            onAddEvent={() => setCurrentView('eventForm')}
+            onGoBack={handleGoBack}
+          />
+        )}
+        {currentView === 'eventForm' && (
+          <EventForm
+            date={selectedDate}
+            onSaveEvent={(date, event) => {
+              handleAddEvent(date, event);
+              setCurrentView('day');
+            }}
+          />
+        )}
       </div>
     </div>
   );
 };
 
+// Function to generate week days for the week view
 const getWeekDays = (selectedDate) => {
   const startOfWeek = new Date(selectedDate);
   startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
