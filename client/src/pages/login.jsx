@@ -27,7 +27,7 @@ export default function LoginPage() {
   
       if (response.data.login.token) {
         localStorage.setItem("token", response.data.login.token); // Store token
-        navigate("/dashboard"); // Redirect after login
+        navigate("/calendar"); // Redirect after login
       } else {
         setErrorMessage(response.data.login.message);
       }

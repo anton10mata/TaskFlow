@@ -11,6 +11,7 @@ const UserType = new GraphQLObjectType({
     id: { type: GraphQLString },
     email: { type: GraphQLString },
     token: { type: GraphQLString },
+    message: { type: GraphQLString },
   },
 });
 
