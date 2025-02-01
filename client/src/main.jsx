@@ -8,6 +8,7 @@ import RegisterPage from "./pages/register.jsx";
 import Home from "./pages/home.jsx";
 import Dashboard from "./pages/dashboard.jsx"; // Ensure this exists
 import ProtectedRoute from "./components/ProtectedRoute.jsx"; // Correct import
+import Calendar from "./components/Calendar.jsx";
 
 // Initialize Apollo Client
 const client = new ApolloClient({
@@ -21,9 +22,9 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { path: "login", element: <LoginPage /> }, // ✅ Ensure this exists
-      { path: "register", element: <RegisterPage /> }, // ✅ Ensure this exists
-      { path: "dashboard", element: <ProtectedRoute />, children: [{ path: "", element: <Dashboard /> }] },
+      { path: "login", element: <LoginPage /> }, // Ensure this exists
+      { path: "register", element: <RegisterPage /> }, // Ensure this exists
+      { path: "calendar", element: <Calendar />, }
     ],
   },
 ]);

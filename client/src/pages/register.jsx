@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
 
 const REGISTER_MUTATION = gql`
   mutation Register($email: String!, $password: String!) {
     register(email: $email, password: $password) {
-      message
+      email
+      token
     }
   }
 `;
@@ -31,13 +32,14 @@ export default function RegisterPage() {
     try {
       const response = await register({ variables: { email, password } });
 
-      if (response.data.register.message === "User registered successfully") {
-        navigate("/login");
+      if (response.data.register.token) {
+        localStorage.setItem("token", response.data.register.token);
+        navigate("/calendar"); // Redirect after registration
       } else {
-        setErrorMessage(response.data.register.message);
+        setErrorMessage("Registration failed. Please try again.");
       }
     } catch (error) {
-      setErrorMessage("Something went wrong. Please try again later.");
+      setErrorMessage("Something went wrong. Please try again.");
     }
   };
 
@@ -60,6 +62,7 @@ export default function RegisterPage() {
             />
           </div>
 
+          {/* ✅ Password Field with Show/Hide Button */}
           <div className="mb-4 relative">
             <label htmlFor="register-password" className="block text-sm font-medium text-gray-700">
               Password
@@ -72,7 +75,6 @@ export default function RegisterPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm pr-10"
                 required
-                autoComplete="new-password"
               />
               <button
                 type="button"
@@ -84,6 +86,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
+          {/* ✅ Confirm Password Field with Show/Hide Button */}
           <div className="mb-4 relative">
             <label htmlFor="register-confirm-password" className="block text-sm font-medium text-gray-700">
               Confirm Password
@@ -96,7 +99,6 @@ export default function RegisterPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm pr-10"
                 required
-                autoComplete="new-password"
               />
               <button
                 type="button"
@@ -108,16 +110,20 @@ export default function RegisterPage() {
             </div>
           </div>
 
+          {/* Show error message if passwords do not match */}
+          {errorMessage && <div className="mb-4 text-sm text-red-500">{errorMessage}</div>}
+
           <button type="submit" className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
             Register
           </button>
         </form>
-        
+
+        {/* Added link to go back to Login Page */}
         <p className="mt-4 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <a href="/login" className="text-indigo-600 hover:underline">
+          <Link to="/login" className="text-indigo-600 hover:underline">
             Login here
-          </a>
+          </Link>
         </p>
       </div>
     </div>
