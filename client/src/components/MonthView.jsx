@@ -10,21 +10,21 @@ const MonthView = ({ onSelectDay, events }) => {
   });
 
   return (
-    <div className="p-4 bg-blue-500 rounded-lg shadow-lg">
+    <div className="p-4 bg-sky-400 border-solid border-8 border-gray-900 rounded-lg shadow-lg">
       {/* Days of the Week Labels */}
-      <div className="grid grid-cols-7 text-center font-bold text-xl mb-4 text-white p-6 bg-blue-700 rounded-lg shadow-lg">
+      <div className="grid grid-cols-7 text-center font-bold text-xl mb-4 text-white border-2 border-black rounded-xl p-6 bg-blue-700 rounded-lg shadow-lg">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
           <div key={day} className="p-2">{day}</div>
         ))}
       </div>
 
       {/* Calendar Grid */}
-      <div className="grid grid-cols-7 gap-0 border-2 border-green-500 border-collapse">
+      <div className="grid grid-cols-7 gap-0 border-4 border-gray-900 rounded-xl border-collapse">
         {days.map((day, index) => (
           <div
             key={index}
-            className={`h-32 flex flex-col justify-center items-center text-xl font-bold border-2 border-green-500 rounded-lg ${
-              day ? 'cursor-pointer bg-blue-600 hover:bg-blue-800 text-white' : 'bg-gray-400 text-gray-300'
+            className={`h-32 flex flex-col justify-center items-center text-xl font-bold border-2 border-gray-900 rounded-lg ${
+              day ? 'cursor-pointer bg-blue-600 hover:bg-blue-800 text-white' : 'bg-slate-500 text-gray-300'
             }`}
             onClick={() => day && onSelectDay(day)}
           >

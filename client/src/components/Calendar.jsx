@@ -26,12 +26,13 @@ const Calendar = () => {
   };
 
   return (
-    <div className="calendar-container bg-white text-gray-800 w-full min-h-screen flex flex-col items-center">
-      <header className="text-center py-4 mb-4">
-        <h1 className="text-3xl font-bold text-green-600">My Calendar</h1>
-      </header>
+    <div className="calendar-container text-gray-800 w-full min-h-screen flex flex-col items-center">
 
-      <div className="w-full max-w-6xl bg-white shadow-md rounded-lg p-6">
+
+      <div className="w-full max-w-6xl p-6">
+      <header className="text-center py-4 mb-4">
+        <h1 className="text-5xl font-bold text-white ">My Calendar</h1>
+      </header>
         {currentView === 'month' && (
           <MonthView onSelectDay={handleSelectDay} events={events} />
         )}
