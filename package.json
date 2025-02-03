@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "cd server && node server.js && cd ../client && vite",
+    "start": "cd backend && node server.js && cd ../client && vite",
     "dev": "cd client && vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "install": "cd server && npm i && cd ../client && npm i"
+    "install": "cd backend && npm i && cd ../client && npm i"
   },
   "dependencies": {
     "@apollo/client": "^3.12.8",
