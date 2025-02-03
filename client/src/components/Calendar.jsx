@@ -27,7 +27,7 @@ const Calendar = () => {
 
   return (
     <div className="calendar-container text-gray-800 w-full min-h-screen flex flex-col items-center">
-
+      <img src="/task-flow-logo.png" alt="Task Flow Logo" className="w-[500px] mt-4" />
 
       <div className="w-full max-w-6xl p-6">
       <header className="text-center py-4 mb-4">
