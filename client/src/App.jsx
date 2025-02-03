@@ -1,5 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Calendar from "./components/Calendar";
 
 export default function App() {
   const navigate = useNavigate();
@@ -16,4 +17,11 @@ export default function App() {
       <Outlet />
     </div>
   );
+
+
+  // return (
+  //   <div>
+  //     <Calendar />
+  //   </div>
+  // );
 }

@@ -1,8 +1,10 @@
 import React from "react";
+import "./index.css";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider, from } from "@apollo/client";
 import App from "./App.jsx";
+
 import LoginPage from "./pages/login.jsx";
 import RegisterPage from "./pages/register.jsx";
 import Home from "./pages/home.jsx";
@@ -10,13 +12,11 @@ import Dashboard from "./pages/dashboard.jsx"; // Ensure this exists
 import ProtectedRoute from "./components/ProtectedRoute.jsx"; // Correct import
 import Calendar from "./components/Calendar.jsx";
 
-// Initialize Apollo Client
 const client = new ApolloClient({
   uri: "http://localhost:5002/graphql",
   cache: new InMemoryCache(),
 });
 
-// Define routes properly
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,3 +34,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </ApolloProvider>
 );
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/", 
+//     element: <App />, 
+//   }
+// ]);
+
+
+// const rootElement = document.getElementById("root");
+// if (rootElement) {
+//   ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
+// }
