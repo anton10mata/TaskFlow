@@ -4,6 +4,7 @@ const schema = require("./schema");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+console.log("Loaded JWT_SECRET:", process.env.JWT_SECRET || "Not Loaded");
 
 const app = express();
 app.use(cors()); 
@@ -26,11 +27,12 @@ app.use(
 
     return {
       schema,
-      graphiql: true, 
-      context: { user }, // 🔹 Pass user to GraphQL context
+      graphiql: true,
+      context: { user },
     };
   })
 );
+
 
 const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => {

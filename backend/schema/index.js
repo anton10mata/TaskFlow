@@ -1,6 +1,7 @@
 const { GraphQLSchema, GraphQLObjectType, GraphQLString } = require("graphql");
 const RegisterMutation = require("./mutations/register");
 const LoginMutation = require("./mutations/login");
+const AddEventMutation = require("./mutations/event");
 
 const RootQuery = new GraphQLObjectType({
   name: "Query",
@@ -17,6 +18,7 @@ const Mutation = new GraphQLObjectType({
   fields: {
     register: RegisterMutation,
     login: LoginMutation,
+    // event: AddEventMutation,
   },
 });
 

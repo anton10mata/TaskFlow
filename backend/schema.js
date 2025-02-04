@@ -1,8 +1,17 @@
-const { GraphQLObjectType, GraphQLSchema, GraphQLString } = require("graphql");
+const {
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
+  GraphQLNonNull,
+  GraphQLList,
+} = require("graphql");
+
 const db = require("./db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+
+
 
 // Define UserType for GraphQL
 const UserType = new GraphQLObjectType({
@@ -14,6 +23,16 @@ const UserType = new GraphQLObjectType({
     message: { type: GraphQLString },
   },
 });
+
+// const EventType = new GraphQLObjectType({
+//   name: "Event",
+//   fields: {
+//     id: { type: GraphQLString },
+//     title: { type: GraphQLString },
+//     date: { type: GraphQLString },
+//     userId: { type: GraphQLString },
+//   },
+// });
 
 // Define Root Query Type (MUST BE INCLUDED)
 const RootQuery = new GraphQLObjectType({
@@ -33,10 +52,20 @@ const RootQuery = new GraphQLObjectType({
         };
       },
     },
+    // getEvents: {
+    //   type: new GraphQLList(EventType),
+    //   async resolve(_, __, context) {
+    //     if (!context.user) {
+    //       throw new Error("Unauthorized");
+    //     }
+
+    //     const result = await db.query("SELECT * FROM events WHERE user_id = $1", [context.user.userId]);
+    //     return result.rows;
+    //   },
+    // },
   },
 });
 
-// Define Mutations
 const RootMutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
@@ -86,11 +115,32 @@ const RootMutation = new GraphQLObjectType({
           { expiresIn: "1h" }
         );
 
-        return { id: user.rows[0].id, email: user.rows[0].email, token };
+        return { id: user.rows[0].id, email, token };
       },
     },
+
+    // createEvent: {
+    //   type: EventType,
+    //   args: {
+    //     title: { type: GraphQLString },
+    //     date: { type: GraphQLString },
+    //   },
+    //   async resolve(_, { title, date }, context) {
+    //     if (!context.user) {
+    //       throw new Error("Unauthorized");
+    //     }
+
+    //     const newEvent = await db.query(
+    //       "INSERT INTO events (title, date, user_id) VALUES ($1, $2, $3) RETURNING *",
+    //       [title, date, context.user.id]
+    //     );
+
+    //     return newEvent.rows[0];
+    //   },
+    // },
   },
 });
+
 
 // EXPORT the schema with BOTH query and mutation
 module.exports = new GraphQLSchema({
