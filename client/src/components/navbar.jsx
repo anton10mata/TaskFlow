@@ -1,31 +1,29 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './navbar.css';
 import logo from '/task-flow-logo-no-text.png';
-import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const location = useLocation(); // To detect the current page
+  const location = useLocation();
   const navigate = useNavigate();
+
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove token from localStorage
-    navigate("/login"); // Redirect to login page
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
-  // Render navbar on all pages except login and sign-up
   if (location.pathname === '/login' || location.pathname === '/register') {
-    return null; // Hide navbar on login and sign-up pages
+    return null;
   }
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  // Function to handle calendar selection
   const selectCalendar = (calendar) => {
     setActiveCalendar(calendar);
-    setIsDropdownOpen(false); // Close the dropdown
+    setIsDropdownOpen(false);
   };
 
   return (
@@ -56,13 +54,14 @@ const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
               ))}
             </div>
           )}
+        </li>
 
+        <li className="navbar-item">
           <Link to="/dashboard" className="navbar-link">Dashboard</Link>
-          <button
-            onClick={handleLogout}
-            className="navbar-link"
-            id="logout-button"
-          >
+        </li>
+
+        <li className="navbar-item">
+          <button onClick={handleLogout} className="navbar-link" id="logout-button">
             Logout
           </button>
         </li>
@@ -72,3 +71,4 @@ const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
 };
 
 export default Navbar;
+

@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react"; 
-import Navbar from "./components/Navbar.jsx"
-import './index.css'
+import { useEffect, useState } from "react";
+import Navbar from './components/Navbar.jsx';
+import './index.css';
 
 export default function App() {
   const navigate = useNavigate();
@@ -28,7 +28,8 @@ export default function App() {
         activeCalendar={activeCalendar} 
         setActiveCalendar={setActiveCalendar} 
       />
-      <div className="flex-grow"> 
+      <div className="flex-grow">
+        {/* This is where the child components will be rendered */}
         <Outlet />
       </div>
     </div>
