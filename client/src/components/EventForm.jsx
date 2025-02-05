@@ -30,7 +30,7 @@ const EventForm = ({ date, onSaveEvent, onGoBack }) => {
         </button>
         <button
           type="button"
-          className="bg-gray-500 text-white py-2 px-4 rounded"
+          className="bg-slate-600 text-white py-2 px-4 rounded"
           onClick={onGoBack} 
         >
           Back to Day View
