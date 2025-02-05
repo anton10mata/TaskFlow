@@ -1,13 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './navbar.css';
-import logo from '/task-flow-logo-no-text.png'; 
+import logo from '/task-flow-logo-no-text.png';
 
 const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
+  if (location.pathname === '/login' || location.pathname === '/register') {
+    return null;
+  }
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const selectCalendar = (calendar) => {
+    setActiveCalendar(calendar);
+    setIsDropdownOpen(false);
   };
 
   return (
@@ -15,7 +31,6 @@ const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
       <div className="navbar-brand">
         <Link to="/">
           <img src={logo} alt="TaskFlow Logo" className="navbar-logo" />
-          <span>TaskFlow</span> 
         </Link>
       </div>
       <ul className="navbar-links">
@@ -31,10 +46,7 @@ const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
               {calendars.map((calendar) => (
                 <button
                   key={calendar.id}
-                  onClick={() => {
-                    setActiveCalendar(calendar);
-                    toggleDropdown();
-                  }}
+                  onClick={() => selectCalendar(calendar)}
                   className={`calendar-dropdown-item ${calendar.id === activeCalendar?.id ? "active" : ""}`}
                 >
                   {calendar.name}
@@ -43,8 +55,15 @@ const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
             </div>
           )}
         </li>
+
         <li className="navbar-item">
           <Link to="/dashboard" className="navbar-link">Dashboard</Link>
+        </li>
+
+        <li className="navbar-item">
+          <button onClick={handleLogout} className="navbar-link" id="logout-button">
+            Logout
+          </button>
         </li>
       </ul>
     </nav>

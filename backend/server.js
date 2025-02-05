@@ -1,24 +1,22 @@
+const path = require("path");
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
-const schema = require("./schema"); 
+const schema = require("./schema");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+
 console.log("Loaded JWT_SECRET:", process.env.JWT_SECRET || "Not Loaded");
 
 const app = express();
-app.use(cors()); 
+app.use(cors());
 app.use(express.json());
-
-app.use(express.static("../client/src"));
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/src", "index.html"));
-})
 
 // GraphQL endpoint with context
 app.use(
   "/graphql",
   graphqlHTTP((req) => {
+    console.log("Request received at /graphql");
     let user = null;
     const authHeader = req.headers.authorization;
 
@@ -32,12 +30,17 @@ app.use(
 
     return {
       schema,
-      graphiql: true,
+      graphiql: true, // Enable GraphiQL
       context: { user },
     };
   })
 );
 
+// Static file serving for the frontend
+app.use(express.static(path.join(__dirname, "../client")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/index.html"));
+});
 
 const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => {
