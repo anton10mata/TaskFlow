@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MonthView from './MonthView';
 import WeekView from './WeekView';
 import DayView from './DayView';
 import EventForm from './EventForm';
 import { useNavigate } from 'react-router-dom';
 
-
 const Calendar = () => {
   const [currentView, setCurrentView] = useState('month');
   const [selectedDate, setSelectedDate] = useState(new Date().toDateString());
   const [events, setEvents] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Trigger the "loaded" animation after the component mounts
+    setIsLoaded(true);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove token from localStorage
@@ -35,16 +40,17 @@ const Calendar = () => {
 
   const handleBackToDay = () => {
     setCurrentView('day');
-  }
+  };
 
   return (
-    <div className="calendar-container text-gray-800 w-full min-h-screen flex flex-col items-center">
+    <div
+      className={`calendar-container text-gray-800 w-full min-h-screen flex flex-col items-center transition-all duration-500 ease-in-out ${isLoaded ? 'animate-slide-up' : ''}`}
+    >
       <img src="/task-flow-logo.png" alt="Task Flow Logo" className="w-[500px] mt-4" />
-
       <div className="w-full max-w-6xl p-6">
-      <header className="text-center py-4 mb-4">
-        <h1 className="text-5xl font-bold text-white ">My Calendar</h1>
-      </header>
+        <header className="text-center py-4 mb-4">
+          <h1 className="text-5xl font-bold text-white">My Calendar</h1>
+        </header>
         {currentView === 'month' && (
           <MonthView onSelectDay={handleSelectDay} events={events} />
         )}
