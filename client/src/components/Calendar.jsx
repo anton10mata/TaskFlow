@@ -4,6 +4,11 @@ import WeekView from './WeekView';
 import DayView from './DayView';
 import EventForm from './EventForm';
 
+const handleLogout = () => {
+  localStorage.removeItem("token"); // Remove token from localStorage
+  navigate("/login"); // Redirect to login page
+};
+
 const Calendar = () => {
   const [currentView, setCurrentView] = useState('month');
   const [selectedDate, setSelectedDate] = useState(new Date().toDateString());
@@ -31,6 +36,12 @@ const Calendar = () => {
 
   return (
     <div className="calendar-container text-gray-800 w-full min-h-screen flex flex-col items-center">
+        <button
+          onClick={handleLogout}
+          className="px-4 py-2 bg-emerald-500 text-black rounded-md"
+        >
+          Logout
+      </button>
       <img src="/task-flow-logo.png" alt="Task Flow Logo" className="w-[500px] mt-4" />
 
       <div className="w-full max-w-6xl p-6">
