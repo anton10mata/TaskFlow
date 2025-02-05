@@ -8,7 +8,7 @@ const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
   const location = useLocation(); // To detect the current page
 
   // Render navbar on all pages except login and sign-up
-  if (location.pathname === '/login' || location.pathname === '/signup') {
+  if (location.pathname === '/login' || location.pathname === '/register') {
     return null; // Hide navbar on login and sign-up pages
   }
 
