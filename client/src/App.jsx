@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Calendar from "./components/Calendar";
+import Navbar from './Navbar.jsx'; 
 
 export default function App() {
   const navigate = useNavigate();
