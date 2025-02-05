@@ -5,12 +5,12 @@ import DayView from './DayView';
 import EventForm from './EventForm';
 import { useNavigate } from 'react-router-dom';
 
-navigate = useNavigate();
 
 const Calendar = () => {
   const [currentView, setCurrentView] = useState('month');
   const [selectedDate, setSelectedDate] = useState(new Date().toDateString());
   const [events, setEvents] = useState({});
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove token from localStorage
