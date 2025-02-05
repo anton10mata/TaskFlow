@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './navbar.css';
-import logo from '/task-flow-logo-no-text.png'; 
+import logo from '/task-flow-logo-no-text.png';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation(); // To detect the current page
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove token from localStorage
+    navigate("/login"); // Redirect to login page
+  };
 
   // Render navbar on all pages except login and sign-up
   if (location.pathname === '/login' || location.pathname === '/register') {
@@ -52,6 +58,13 @@ const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
           )}
 
           <Link to="/dashboard" className="navbar-link">Dashboard</Link>
+          <button
+            onClick={handleLogout}
+            className="navbar-link"
+            id="logout-button"
+          >
+            Logout
+          </button>
         </li>
       </ul>
     </nav>

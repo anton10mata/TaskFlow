@@ -102,3 +102,18 @@
 body.login-page .navbar {
   display: none;
 }
+
+#logout-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white; /* White logout button text */
+  padding: 0.5rem 1rem; /* Add padding to the logout button */
+  border-radius: 5px; /* Match the navbar links' border radius */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
+
+#logout-button:hover {
+  background-color: #fff; /* White background on hover */
+  color: #0a1751; /* Dark blue text on hover */
+}
