@@ -32,7 +32,7 @@ export default function LoginPage() {
         setErrorMessage(response.data.login.message);
       }
     } catch (err) {
-      setErrorMessage("Invalid email sor password.");
+      setErrorMessage("Invalid email or password.");
     }
   };
 
