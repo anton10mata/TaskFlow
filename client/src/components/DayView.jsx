@@ -19,7 +19,7 @@ const DayView = ({ date, events, onAddEvent, onGoBack }) => {
           Add Event
         </button>
         <button
-          className="bg-gray-500 text-white py-2 px-4 rounded"
+          className="bg-slate-600 text-white py-2 px-4 rounded"
           onClick={onGoBack}
         >
           Back to Month View

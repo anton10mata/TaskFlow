@@ -6,7 +6,7 @@ const EventType = new GraphQLObjectType({
   fields: {
     id: { type: GraphQLString },
     date: { type: GraphQLString },
-    name: { type: GraphQLString },
+    title: { type: GraphQLString },
   },
 });
 
@@ -16,11 +16,11 @@ const AddEventMutation = {
     date: { type: new GraphQLNonNull(GraphQLString) },
     name: { type: new GraphQLNonNull(GraphQLString) },
   },
-  async resolve(_, { date, name }) {
+  async resolve(_, { date, title }) {
     try {
       const result = await db.query(
-        "INSERT INTO events (date, name) VALUES ($1, $2) RETURNING *",
-        [date, name]
+        "INSERT INTO events (date, title) VALUES ($1, $2) RETURNING *",
+        [date, title]
       );
       return result.rows[0];
     } catch (error) {
