@@ -71,3 +71,4 @@ const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
 };
 
 export default Navbar;
+
