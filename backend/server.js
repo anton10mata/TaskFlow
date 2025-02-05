@@ -10,6 +10,11 @@ const app = express();
 app.use(cors()); 
 app.use(express.json());
 
+app.use(express.static("../client/src"));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/src", "index.html"));
+})
+
 // GraphQL endpoint with context
 app.use(
   "/graphql",
