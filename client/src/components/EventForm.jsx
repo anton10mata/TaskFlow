@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const EventForm = ({ date, onSaveEvent }) => {
+const EventForm = ({ date, onSaveEvent, onGoBack }) => {
   const [eventName, setEventName] = useState('');
 
   const handleSubmit = (e) => {
@@ -12,22 +12,31 @@ const EventForm = ({ date, onSaveEvent }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4">
-      <h2 className="text-lg font-bold mb-4">Add Event for {date}</h2>
-      <input
-        type="text"
-        className="w-full p-2 border rounded mb-4"
-        placeholder="Event name"
-        value={eventName}
-        onChange={(e) => setEventName(e.target.value)}
-      />
-      <button
-        type="submit"
-        className="bg-green-500 text-white py-2 px-4 rounded"
-      >
-        Save Event
-      </button>
-    </form>
+    <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+      <form onSubmit={handleSubmit} className="p-4">
+        <h2 className="text-lg font-bold mb-4">Add Event for {date}</h2>
+        <input
+          type="text"
+          className="w-full p-2 border rounded mb-4"
+          placeholder="Event name"
+          value={eventName}
+          onChange={(e) => setEventName(e.target.value)}
+        />
+        <button
+          type="submit"
+          className="bg-green-500 text-white py-2 px-4 rounded"
+        >
+          Save Event
+        </button>
+        <button
+          type="button"
+          className="bg-gray-500 text-white py-2 px-4 rounded"
+          onClick={onGoBack} 
+        >
+          Back to Day View
+        </button>
+      </form>
+    </div>
   );
 };
 

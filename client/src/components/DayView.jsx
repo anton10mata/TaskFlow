@@ -2,7 +2,7 @@ import React from 'react';
 
 const DayView = ({ date, events, onAddEvent, onGoBack }) => {
   return (
-    <div className="p-4">
+    <div className="p-4 bg-white rounded-lg shadow-md">
       <h2 className="text-xl font-bold mb-4">Events for {date}</h2>
       <ul>
         {(events[date] || []).map((event, index) => (
