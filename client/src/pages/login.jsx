@@ -27,12 +27,12 @@ export default function LoginPage() {
   
       if (response.data.login.token) {
         localStorage.setItem("token", response.data.login.token); // Store token
-        navigate("/calendar"); // Redirect after login
+        navigate("/dashboard"); // Redirect after login
       } else {
         setErrorMessage(response.data.login.message);
       }
     } catch (err) {
-      setErrorMessage("Invalid email or password.");
+      setErrorMessage("Invalid email sor password.");
     }
   };
 
