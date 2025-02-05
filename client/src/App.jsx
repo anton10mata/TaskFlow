@@ -1,28 +1,36 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import Calendar from "./components/Calendar";
+import { useEffect, useState } from "react"; 
 import Navbar from './Navbar.jsx'; 
+import './index.css'
 
 export default function App() {
   const navigate = useNavigate();
+  const [calendars, setCalendars] = useState([
+    { id: 1, name: 'Work' },
+    { id: 2, name: 'School' },
+    { id: 3, name: 'Personal' },
+  ]);
+  const [activeCalendar, setActiveCalendar] = useState(null); 
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       navigate("/login");
+    } else {
+      setActiveCalendar(calendars[0]); 
     }
-  }, [navigate]);
+  }, [navigate, calendars]); 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <Outlet />
+    <div className="flex flex-col min-h-screen"> 
+      <Navbar 
+        calendars={calendars} 
+        activeCalendar={activeCalendar} 
+        setActiveCalendar={setActiveCalendar} 
+      /> {/* Add Navbar and pass props */}
+      <div className="flex-grow"> 
+        <Outlet />
+      </div>
     </div>
   );
-
-
-  // return (
-  //   <div>
-  //     <Calendar />
-  //   </div>
-  // );
 }
