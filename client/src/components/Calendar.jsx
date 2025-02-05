@@ -3,16 +3,19 @@ import MonthView from './MonthView';
 import WeekView from './WeekView';
 import DayView from './DayView';
 import EventForm from './EventForm';
+import { useNavigate } from 'react-router-dom';
 
-const handleLogout = () => {
-  localStorage.removeItem("token"); // Remove token from localStorage
-  navigate("/login"); // Redirect to login page
-};
+navigate = useNavigate();
 
 const Calendar = () => {
   const [currentView, setCurrentView] = useState('month');
   const [selectedDate, setSelectedDate] = useState(new Date().toDateString());
   const [events, setEvents] = useState({});
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove token from localStorage
+    navigate("/login"); // Redirect to login page
+  };
 
   const handleAddEvent = (date, event) => {
     setEvents((prevEvents) => ({
