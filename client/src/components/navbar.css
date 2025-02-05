@@ -1,78 +1,104 @@
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #f0f0f0;
-  }
-  
-  .navbar-brand {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
-  
-  .navbar-logo {
-    height: 30px;
-    width: auto;
-    margin-right: 0.5rem;
-    vertical-align: middle;
-  }
-  
-  .navbar-links {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navbar-item {
-    margin-left: 1rem;
-  }
-  
-  .navbar-link {
-    text-decoration: none;
-    color: #333;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-  }
-  
-  .navbar-link:hover {
-    background-color: #ddd;
-  }
-  
-  .calendar-dropdown-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .calendar-dropdown {
-    position: absolute;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    z-index: 1;
-    min-width: 150px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .calendar-dropdown-item {
-    display: block;
-    padding: 0.5rem 1rem;
-    border: none;
-    background: none;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-  }
-  
-  .calendar-dropdown-item.active {
-    background-color: #eee;
-  }
-  
-  .calendar-dropdown-item:hover {
-    background-color: #ddd;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #0a1751; /* Dark blue background */
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #fff; /* White brand text */
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.navbar-logo {
+  height: 30px;
+  width: auto;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  margin-left: 1rem;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #fff; /* White link text */
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
+
+.navbar-link:hover {
+  background-color: #fff; /* White background on hover */
+  color: #0a1751; /* Dark blue text on hover */
+}
+
+.calendar-dropdown-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white; /* White dropdown toggle text */
+  padding: 0.5rem 1rem; /* Add padding to the dropdown toggle */
+  border-radius: 5px; /* Match the navbar links' border radius */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
+
+.calendar-dropdown-toggle:hover {
+  background-color: #fff; /* White background on hover */
+  color: #0a1751; /* Dark blue text on hover */
+}
+
+
+.calendar-dropdown {
+  position: absolute;
+  background-color: #0a1751; /* Dark blue dropdown background */
+  border: none; /* Remove default border */
+  z-index: 1;
+  min-width: 150px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  margin-top: 0.5rem;
+  border-radius: 5px; /* Match the navbar links' border radius */
+}
+
+.calendar-dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  color: #fff; /* White dropdown item text */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
+
+.calendar-dropdown-item.active {
+  background-color: #142880; /* Slightly lighter dark blue for active item */
+}
+
+.calendar-dropdown-item:hover {
+  background-color: #fff; /* White background on hover */
+  color: #0a1751; /* Dark blue text on hover */
+}
+
+/* Ensure no navbar is visible on the login page */
+body.login-page .navbar {
+  display: none;
+}
