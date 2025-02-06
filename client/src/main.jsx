@@ -12,7 +12,7 @@ import Calendar from "./components/Calendar.jsx";
 
 // Apollo Client setup
 const client = new ApolloClient({
-  uri: "http://localhost:5002/graphql",
+  uri: "/graphql" || "https://localhost:4000/graphql",
   cache: new InMemoryCache(),
 });
 
