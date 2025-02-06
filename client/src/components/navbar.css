@@ -31,6 +31,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  align-items: center; /* Ensure items are aligned in a row */
 }
 
 .navbar-item {
@@ -42,12 +43,33 @@
   color: #fff; /* White link text */
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+  border: 2px solid transparent; /* Add a transparent border */
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transitions */
 }
 
+/* Add border color when hovering */
 .navbar-link:hover {
   background-color: #fff; /* White background on hover */
   color: #0a1751; /* Dark blue text on hover */
+  border-color: #fff; /* White border on hover */
+}
+
+/* Logout button - dark blue with white text */
+#logout-button {
+  text-decoration: none;
+  color: #fff; /* White text */
+  background-color: #0a1751; /* Dark blue background */
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Hover effect for logout button */
+#logout-button:hover {
+  background-color: #fff; /* White background on hover */
+  color: #0a1751; /* Dark blue text on hover */
+  border-color: #fff; /* White border on hover */
 }
 
 .calendar-dropdown-toggle {
@@ -65,7 +87,7 @@
   color: #0a1751; /* Dark blue text on hover */
 }
 
-
+/* Dropdown styling */
 .calendar-dropdown {
   position: absolute;
   background-color: #0a1751; /* Dark blue dropdown background */
@@ -89,31 +111,8 @@
   transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
 }
 
-.calendar-dropdown-item.active {
-  background-color: #142880; /* Slightly lighter dark blue for active item */
-}
-
+/* Hover effect for dropdown items */
 .calendar-dropdown-item:hover {
-  background-color: #fff; /* White background on hover */
-  color: #0a1751; /* Dark blue text on hover */
-}
-
-/* Ensure no navbar is visible on the login page */
-body.login-page .navbar {
-  display: none;
-}
-
-#logout-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: white; /* White logout button text */
-  padding: 0.5rem 1rem; /* Add padding to the logout button */
-  border-radius: 5px; /* Match the navbar links' border radius */
-  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
-}
-
-#logout-button:hover {
   background-color: #fff; /* White background on hover */
   color: #0a1751; /* Dark blue text on hover */
 }

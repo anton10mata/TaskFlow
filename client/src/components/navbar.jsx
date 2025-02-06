@@ -29,7 +29,7 @@ const Navbar = ({ calendars, activeCalendar, setActiveCalendar }) => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/">
+        <Link to="/dashboard">
           <img src={logo} alt="TaskFlow Logo" className="navbar-logo" />
         </Link>
       </div>

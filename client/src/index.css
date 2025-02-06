@@ -91,3 +91,20 @@ button:focus-visible {
   align-items: center;
   justify-content: flex-start;
 }
+/* Animation for calendar sliding up */
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%); /* Start off-screen, below */
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0); /* End at the normal position */
+    opacity: 1;
+  }
+}
+
+/* Class to apply when component is loaded */
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
