@@ -36,7 +36,7 @@ export default function RegisterPage() {
   
       if (response.data && response.data.register && response.data.register.token) {
         localStorage.setItem("token", response.data.register.token);
-        navigate("/calendar"); // Redirect after registration
+        navigate("/dashboard"); // Redirect after registration
       } else {
         setErrorMessage("Registration failed. Please try again.");
       }
